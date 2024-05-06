@@ -1,48 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Assignment 2: Blocky Animal</title>
+    <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+  </head>
 
   <body onload="main()">
-    <div class="container">
-      <canvas id="webgl" width="400" height="400">
+    <div>
+        <canvas id="webgl" width="400" height="400">
         Please use a browser that supports "canvas"
-      </canvas>
-      </div>
+        </canvas>
+    </div>
+    <p id="numdot"> XXX </p>
+    
+    <p>
+
+    Animation:
+    <button type="button" id="animationOnButton">ON</button>
+    <button type="button" id="animationOffButton">OFF</button>
+
+    </p>
+    <!-- <button type="button" id="foxButton">Show Fox</button> -->
+
+    <p>
+    Arm Joint <input type="range" min="-80" max="20" value="0" class="slider" id="armSlide">
+    <p>
+    Thigh Joint <input type="range" min="0" max="45" value="0" class="slider" id="legSlide">
+    Feet Joint <input type="range" min="0" max="45" value="0" class="slider" id="backfeetSlide">
+    <p>
+      Reset Camera:
+      <button type="button" id="resetCameraButton">Reset</button>
+    <p>
+    Camera Angle X <input type="range" min="-0" max="360" value="0" class="slider" id="angleSlide">
+    <p>
+    <div>
+      <p>Diane Poeng - dpoeng@ucsc.edu</p>
+      <p>Notes to Grader:
+      </p>
     </div>
 
-
-
-    <p id = "numdot"> XXX </p>
-
-
-    <button type="button" id="green">X</button>
-    <button type="button" id="red">X</button>    
-
-    <button type="button" id="clearButton">X</button>  
-    <p>
-
-    <button type="button" id="pointButton">X</button>    
-    <button type="button" id="triButton">X</button>  
-    <button type="button" id="circleButton">X</button>  
-
-
-
-
-    <p>
-    X <input type="range" min="0" max="100" value="100" class="slider" id="redSlide">
-    <p>
-    Magenta <input type="range" min="-45" max="45" value="0" class="slider" id="magentaSlide">
-    Animation:
-    <button type="button" id="animationMagentaOnButton">ON</button>
-    <button type="button" id="animationMagentaOffButton">OFF</button>
-    <p>
-    Yellow <input type="range" min="-45" max="45" value="0" class="slider" id="yellowSlide">
-    Animation:
-    <button type="button" id="animationYellowOnButton">ON</button>
-    <button type="button" id="animationYellowOffButton">OFF</button>
-
-    <p>
-    Camera Angle <input type="range" min="0" max="360" value="5" class="slider" id="angleSlide">
-    <p>
 
     <script src="../CSE160-ASG3A/lib/webgl-utils.js"></script>
     <script src="../CSE160-ASG3A/lib/webgl-debug.js"></script>
@@ -53,6 +50,6 @@
     <script src="../CSE160-ASG3A/Point.js"></script>
     <script src="../CSE160-ASG3A/Cube.js"></script>
     <script src="../CSE160-ASG3A/asg3.js"></script>
-
   </body>
+
 </html>
