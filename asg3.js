@@ -20,21 +20,19 @@ var FSHADER_SOURCE =`
   varying vec2 v_UV;
   uniform vec4 u_FragColor;
   uniform sampler2D u_Sampler0;
-  uniform sampler2D u_Sampler1;
   uniform int u_whichTexture;
   void main() {
-    if(u_whichTexture == 1){
-      gl_FragColor = texture2D(u_Sampler1, v_UV); // Panther texture
-    } else if (u_whichTexture == -2){
+
+    if(u_whichTexture == -2){
       gl_FragColor = u_FragColor; //use color
 
-    } else if (u_whichTexture == -1){ //use UV debug color
+    }else if (u_whichTexture == -1){ //use UV debug color
       gl_FragColor = vec4(v_UV,1,1);
 
-    } else if (u_whichTexture == 0){ //use texture0
+    }else if (u_whichTexture == 0){ //use texture0
       gl_FragColor = texture2D(u_Sampler0, v_UV);
 
-    } else { // error put reddish
+    } else{ //error put reddish
       gl_FragColor = vec4(1,.2,.2,1);
     }
 
@@ -53,8 +51,7 @@ let u_ProjectionMatrix;
 let u_ViewMatrix;
 let u_GlobalRotateMatrix;
 let u_whichTexture;
-let u_Sampler0;
-let u_Sampler1;    
+let u_Sampler0;     
 
 function setupWebGL(){
   // Retrieve <canvas> element
@@ -130,12 +127,6 @@ function connectVariablesToGLSL(){
     return ;
   }
 
-  u_Sampler1 = gl.getUniformLocation(gl.program, 'u_Sampler1');
-  if (!u_Sampler1) {
-    console.log('Failed to get the storage location of u_Sampler1');
-    return;
-  }
-
   // Retrieve locations for all the uniforms and attributes
   u_whichTexture = gl.getUniformLocation(gl.program, 'u_whichTexture');
   if (!u_whichTexture) {
@@ -187,25 +178,23 @@ function addActionsForHtmlUI(){
 
 }
 
-function initTextures(gl, n) {
-  // Existing code to initialize the first texture
-  initSingleTexture('sky.jpg', u_Sampler0, 0);
+function initTextures(gl, n) { // (Part4)
 
-  // New code to initialize the second texture
-  initSingleTexture('panther.jpg', u_Sampler1, 1);
-}
-
-function initSingleTexture(imageSrc, sampler, textureUnit) {
-  var image = new Image();
-  if (!image) {
+  var image = new Image(); // Create an image object
+  if (!image){
     console.log('Failed to create the image object');
     return false;
   }
-  image.onload = function() { sendTextureToGLSL(image, sampler, textureUnit); };
-  image.src = imageSrc;
+
+  // Register the event handler to be called on loading an image
+  image.onload = function(){ sendTextureToGLSL(image); };
+  // Tell the browser to load an image
+  image.src = 'sky.jpg';
+
+  return true;
 }
 
-function sendTextureToGLSL(image, sampler, textureUnit) { // (Part5)
+function sendTextureToGLSL( image) { // (Part5)
 
   var texture = gl.createTexture(); // Create a texture object
 
@@ -215,8 +204,8 @@ function sendTextureToGLSL(image, sampler, textureUnit) { // (Part5)
   }
 
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
-  // Enable the texture unit and its number
-  gl.activeTexture(gl[`TEXTURE${textureUnit}`]);
+  // Enable the texture unit 0
+  gl.activeTexture(gl.TEXTURE0);
   // Bind the texture object to the target
   gl.bindTexture(gl.TEXTURE_2D, texture);
   // Set the texture parameters
@@ -224,7 +213,7 @@ function sendTextureToGLSL(image, sampler, textureUnit) { // (Part5)
   // Set the texture image
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
   // Set the texture unit 0 to the sampler
-  gl.uniform1i(sampler, textureUnit);
+  gl.uniform1i(u_Sampler0, 0);
   
   console.log('finished loadTexture')
 }
@@ -367,7 +356,6 @@ function renderAllShapes(){
   //Draw a left arm
   var yellow = new Cube();
   yellow.color = [1,1,0,1];
-  body.textureNum = 1;
   yellow.matrix.setTranslate(0,-.5,0.0);
   yellow.matrix.rotate(-5,1,0,0);
   yellow.matrix.rotate(-g_yellowAngle,0,0,1);
