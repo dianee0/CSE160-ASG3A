@@ -460,6 +460,7 @@ function renderAllShapes(){
 
   // Right Thigh
   var rightThigh = new Cube();
+  rightThigh.textureNum = -2;
   rightThigh.color = [1.0,1.0,1.0,1.0];
   rightThigh.matrix.translate(0, -0.5, 0.54);
   rightThigh.matrix.rotate(-g_legAngle, 1, 0, 0);
