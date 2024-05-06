@@ -425,13 +425,13 @@ function renderAllShapes(){
   var skybox = new Cube();
   skybox.color = [1,0,0,1];
   skybox.textureNum = 0; // Assuming texture unit 0 has the sky texture
-  skybox.matrix.scale(50, 50, 50); // Adjust size as needed
+  skybox.matrix.scale(50, 50, 50);
   skybox.matrix.translate(-0.5, -0.5, -0.5); // Center the cube
   skybox.render();
 
   //Floor
   var floor = new Cube();
-  floor.color = [0.0,1.0,0.0,1.0];
+  floor.color = [0.0, 50.0, 0.0, 1.0];
   floor.textureNum = -2;
   floor.matrix.translate(0,-.75,0.0);
   floor.matrix.scale(10,0,10);
@@ -483,7 +483,7 @@ function renderAllShapes(){
   backFootRight.render();
 
 
-  // Front Foot Right - Using setTranslate to initialize the position
+  // Front Foot Right 
   var frontFootRight = new Cube();
   frontFootRight.color = [1,1,1,1];
   frontFootRight.matrix = new Matrix4(backCoordR);
